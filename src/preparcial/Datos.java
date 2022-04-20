@@ -29,18 +29,50 @@ public class Datos {
         return lineas;
     }
 
-    public String comprimir(String primeraLinea){
-        int cant = primeraLinea.length();
-        char c = primeraLinea[0];
-        for(int i=0 ; i<cant ; i++){
-            if()
+    public String comprimir(){
+
+        String cadenaGenerada = "";
+        char c = this.primeraLinea.charAt(0);
+        int contador, cant, i=0, j=1;
+        cant = this.primeraLinea.length();
+
+        for(i=0 ; i<cant ; i++){
+            contador = 0;
+            j = i+1;
+            do{
+
+                if(this.primeraLinea.charAt(i) == this.primeraLinea.charAt(j)){
+                    contador++;
+                    j++;
+                }
+            }while(this.primeraLinea.charAt(i) != this.primeraLinea.charAt(j));
+            cadenaGenerada += "(" + contador + this.primeraLinea.charAt(i) + ")";
+            i = j;
         }
     }
 
 
-    public String descomprimir(){
+    public String descomprimir(String cadena){
+        int index =-1, longitudRepeticion=-1;
 
+        for (int i=0; i<cadena.length(); i++){
+            if(cadena.charAt(i) == '('){
+                index = i;
+                for(int j=0; j<cadena.length(); j++){
+                    if(cadena.charAt(index + j) == ')') {
+                        longitudRepeticion = j-1;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        if (index == -1)
+            return cadena;
+        else{
+            int cantidad = Integer.parseInt(cadena.substring(index,index+longitudRepeticion));
+            return descomprimir(cadena);
+        }
     }
 
 }
-lineas[0] = lineas[1] = "";
